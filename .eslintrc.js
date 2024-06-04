@@ -34,8 +34,9 @@ module.exports = {
     ],
     "vue/singleline-html-element-content-newline": "off",
     "vue/multiline-html-element-content-newline": "off",
-    "comma-dangle": ["error", "never"],
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": "off",
+    quotes: ["off"],
+    "vue/html-self-closing": ["off"],
   },
   globals: {
     Tiger: "readonly",

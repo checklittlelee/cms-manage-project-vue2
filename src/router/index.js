@@ -1,29 +1,29 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Layout from '@/layout'
-import './routerExtend'
+import Vue from "vue"
+import Router from "vue-router"
+import Layout from "@/layout"
+import "./routerExtend"
 
 export const constantRoutes = [
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/login',
+    redirect: "/login",
     children: [
       {
-        path: '/home',
-        component: () => import('@/pages/home/index.vue'),
-        name: '首页',
+        path: "/home",
+        component: () => import("@/pages/home/index.vue"),
+        name: "首页",
         hidden: true,
-        meta: { title: '首页' }
-      }
-    //   {
-    //     path: "/editPassword",
-    //     component: () => import("../pages/editPassword/index.vue"),
-    //     name: "editPassword",
-    //     hidden: true,
-    //     meta: { title: "修改密码" },
-    //   },
-    ]
+        meta: { title: "首页" },
+      },
+      //   {
+      //     path: "/editPassword",
+      //     component: () => import("../pages/editPassword/index.vue"),
+      //     name: "editPassword",
+      //     hidden: true,
+      //     meta: { title: "修改密码" },
+      //   },
+    ],
   },
   {
     path: "/login",
@@ -33,45 +33,45 @@ export const constantRoutes = [
     meta: { title: "登录" },
   },
   {
-    path: '/404',
-    component: () => import('../pages/error-page/404'),
-    name: '404',
+    path: "/404",
+    component: () => import("../pages/error-page/404"),
+    name: "404",
     hidden: true,
-    meta: { title: '404' }
+    meta: { title: "404" },
   },
   {
-    path: '/401',
-    component: () => import('../pages/error-page/401'),
-    name: '401',
+    path: "/401",
+    component: () => import("../pages/error-page/401"),
+    name: "401",
     hidden: true,
-    meta: { title: '401' }
+    meta: { title: "401" },
   },
   // 搭建页面
   {
-    path: '/decorate',
-    name: 'decorate',
-    component: () => import('../pages/decorate/index')
+    path: "/decorate",
+    name: "decorate",
+    component: () => import("../pages/decorate/index"),
   },
   // 预览页面
   {
-    path: '/preview',
-    name: 'preview',
-    component: () => import('../pages/preview/index')
+    path: "/preview",
+    name: "preview",
+    component: () => import("../pages/preview/index"),
   },
   // 活动列表页
   {
-    path: '/activity',
-    name: 'activity',
+    path: "/activity",
+    name: "activity",
     component: Layout,
-    meta: { title: '活动管理' },
+    meta: { title: "活动管理" },
     children: [
       {
-        path: '/',
-        component: () => import('@/pages/activity/index'),
-        hidden: true
-      }
-    ]
-  }
+        path: "/",
+        component: () => import("@/pages/activity/index"),
+        hidden: true,
+      },
+    ],
+  },
 ]
 // 异步挂载的路由
 // 动态需要根据权限加载的路由表
@@ -80,7 +80,7 @@ export const asyncRoutes = []
 const createRouter = () =>
   new Router({
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
+    routes: constantRoutes,
   })
 const router = createRouter()
 Vue.router = router

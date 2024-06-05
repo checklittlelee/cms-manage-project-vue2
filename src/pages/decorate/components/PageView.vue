@@ -68,7 +68,7 @@ export default {
       event.preventDefault() // 设置当前区域可以被进入，禁用鼠标默认事件
       const viewWrapTop = 191 // 页面预览区域距离顶部top
       // 拖动距离预览区top距离 = 鼠标距离窗口的高度 - 空白高度 + 滚动高度
-      let dropTop = this.$refs.pageView.scrollTop + event.pageY - viewWrapTop
+      let dropTop = event.pageY - viewWrapTop + this.$refs.pageView.scrollTop
       // 对位置的判断：获取当前拖动组件要添加位置的索引
       let addIndex = 0
       for (let i = this.componentsTopList.length - 1; i >= 0; i--) {
@@ -81,7 +81,7 @@ export default {
           break
         }
       }
-      // 预览区域生成预添加组件
+      // 预览区域生成预添加组件。如果计算的值与存储的值相等，不需要跨源通信，节省开销
       if (this.addComponentIndex === addIndex) return
       // console.log('预添加组件，索引值为', this.componentsTopList, addIndex, dropTop)
       this.SET_DRAG_INDEX(addIndex)
@@ -90,8 +90,8 @@ export default {
     // 左侧组件拖动到页面预览区域外事件
     onDragout(event) {
       event.preventDefault() // 设置当前区域可以被进入
+      // 如果 addComponentIndex 存在
       if (this.addComponentIndex != null) {
-        // console.log('预删除组件')
         this.SET_DRAG_INDEX(null)
         this.VIEW_DELETE_PREVIEW()
       }

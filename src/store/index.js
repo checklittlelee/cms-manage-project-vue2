@@ -99,15 +99,15 @@ const store = new Vuex.Store({
     },
     // 页面新增组件方法
     ADD_COMPONENT(state, { index, data }) {
+      // 对数据进行深拷贝
       const component = JSON.parse(JSON.stringify(data))
-      // 生成随机ID
+      // 生成随机ID。页面中所有组件都要有唯一一个ID，例如添加了两个图文广告，但两个是不一样的组件
       const id = component.data.component + "-" + createRandomId()
       component.id = id
       if (component.iconClass) {
         delete component.iconClass
       } // 清除后台使用的图标
       state.pageData.componentList.splice(index, 0, component) // 插入选择的组件
-      console.log(id, "id")
       this.commit("SET_ACTIVE_ID", id) // 设置新加入的组件为选中状态
       this.commit("VIEW_SET_ACTIVE", id) // 更新H5区域选中状态
       this.commit("SET_SETTYPE", 2) // 更新页面编辑类型为组件
@@ -144,8 +144,6 @@ const store = new Vuex.Store({
     // 向H5页面发送更改后的数据
     // disabledRestHeight: 是否将h5组件高度更新到cms
     VIEW_UPDATE(state, disabledRestHeight = false) {
-      console.log("向H5发送更改后的数据")
-      console.log(state.pageData)
       messager.emit("pageChange", {
         disabledRestHeight,
         value: state.pageData,
@@ -159,7 +157,7 @@ const store = new Vuex.Store({
     VIEW_DELETE_PREVIEW(state) {
       messager.emit("deletePreview")
     },
-    // 向H5页面发送选中指定项
+    // 向H5页面发送选中指定项，高亮
     VIEW_SET_ACTIVE(state, id) {
       messager.emit("setActive", id)
     },
@@ -174,15 +172,17 @@ const store = new Vuex.Store({
       )
       window.location.href = window.location.origin + "/vendor/tologin"
     },
-    // 搭建页面数据变化时调用方法 - 将更改后的数据发送到H5
+    // 内容分发：搭建页面数据变化时调用mutation里的方法 - 将更改后的数据发送到H5
     pageChange({ commit }, changeValue) {
       console.log(changeValue, "changeValue")
+      // 映射关系
       const commitObj = {
         add: "ADD_COMPONENT", // 新增组件
         delete: "DELETE_COMPONENT", // 删除组件
         edit: "EDIT_COMPONENT", // 编辑组件
         update: "UPDATE_COMPONENT", // 更新页面
       }
+      // 如果前者为true，就触发 && 后面的commit
       commitObj[changeValue.type] &&
         commit(commitObj[changeValue.type], changeValue)
       // 向H5页面发送更改后的数据
@@ -193,8 +193,8 @@ const store = new Vuex.Store({
       // 监听H5预览页面高度变化
       messager.on("pageHeightChange", (data) => {
         console.log("从H5更新组件高度为", data)
-        let height = data.height ? data.height + 72 : 768
-        let list = data.componentsTopList || []
+        let height = data.height ? data.height + 72 : 768 // 页面高度
+        let list = data.componentsTopList || [] // 页面中组件高度的集合
         commit("UPDATE_PAGE_HEIGHT", { height, list })
       })
       // 监听H5预览页面数据变化

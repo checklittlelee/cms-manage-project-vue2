@@ -72,8 +72,8 @@ export default {
     },
     // 拖拽结束
     onDragEnd() {
-      this.SET_DRAG_STATE(false)
-      let addIndex = this.addComponentIndex
+      this.SET_DRAG_STATE(false) // 结束状态
+      let addIndex = this.addComponentIndex // 要添加的索引
       if (addIndex != null) {
         console.log("生成组件")
         this.pageChange({

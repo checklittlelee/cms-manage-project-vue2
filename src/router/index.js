@@ -61,13 +61,13 @@ export const constantRoutes = [
   // 活动列表页
   {
     path: "/activity",
-    name: "activity",
     component: Layout,
     meta: { title: "活动管理" },
     children: [
       {
         path: "/",
         component: () => import("@/pages/activity/index"),
+        name: "activity",
         hidden: true,
       },
     ],

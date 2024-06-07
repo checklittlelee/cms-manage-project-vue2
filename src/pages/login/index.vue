@@ -5,11 +5,11 @@
       :model="loginForm"
       :rules="loginRules"
       class="login-form"
-      autocomplete="on" label-position="left">
+      autocomplete="on"
+      label-position="left"
+    >
       <div class="title-container">
-        <h3 class="title">
-          Cms-Manage内容管理系统
-        </h3>
+        <h3 class="title">Cms-Manage内容管理系统</h3>
       </div>
       <el-form-item prop="username">
         <el-input
@@ -32,74 +32,82 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width: 100%; margin-bottom: 30px"
         @click="handleLogin"
-        >登录</el-button>
+      >
+        登录
+      </el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import { login } from '@/api/activity'
+import { login } from "@/api/activity"
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入用户名'))
+        callback(new Error("请输入用户名"))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('请输入密码'))
+        callback(new Error("请输入密码"))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: "",
+        password: "",
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername },
+        ],
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
-      passwordType: 'password',
+      passwordType: "password",
       capsTooltip: false,
-      loading: false
+      loading: false,
     }
   },
   methods: {
     checkCapslock(e) {
       const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+      this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z"
     },
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = ""
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password"
       }
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          login(this.loginForm).then(res => {
-            this.loading = false
-            // res.data
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('username', res.data.username)
-            this.$router.replace('/home')
-          }).catch(() => {
-            this.loading = false
-          })
+          login(this.loginForm)
+            .then((res) => {
+              this.loading = false
+              // res.data
+              localStorage.setItem("token", res.data.token)
+              localStorage.setItem("username", res.data.username)
+              this.$router.replace("/home")
+            })
+            .catch(() => {
+              this.loading = false
+            })
           // this.$store.dispatch('user/login', this.loginForm)
           //   .then(() => {
           //     this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
@@ -115,13 +123,13 @@ export default {
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
+        if (cur !== "redirect") {
           acc[cur] = query[cur]
         }
         return acc
       }, {})
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="less" scoped>
@@ -129,7 +137,7 @@ export default {
   // width: 100%;
   min-width: 1200px;
   height: 100%;
-  background-image: url('../../assets/images/SAAS_login/bg_login.jpg');
+  background-image: url("../../assets/images/SAAS_login/bg_login.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

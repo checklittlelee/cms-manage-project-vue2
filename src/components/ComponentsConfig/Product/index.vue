@@ -1,3 +1,4 @@
+<!-- 商品 -->
 <template>
   <div>
     <ComGroup title="兑换价颜色">
@@ -29,7 +30,7 @@
             animation: 300,
             handle: '.up-pic-img',
             forceFallback: true,
-            fallbackTolerance: 1
+            fallbackTolerance: 1,
           }"
         >
           <div
@@ -48,7 +49,11 @@
             />
           </div>
         </draggable>
-        <UpLoadBox add-place-holder="" :upload-file="false" @editImg="dialogProductVisible = true" />
+        <UpLoadBox
+          add-place-holder=""
+          :upload-file="false"
+          @editImg="dialogProductVisible = true"
+        />
       </div>
     </ComGroup>
     <!-- <ComGroup title="排序方式">
@@ -86,25 +91,13 @@
         :content-block="true"
       />
     </ComGroup>
-    <ComGroup
-      title="是否显示划线价"
-    >
-      <el-radio v-model="configData.markingPrice" :label="0">
-        否
-      </el-radio>
-      <el-radio v-model="configData.markingPrice" :label="1">
-        是
-      </el-radio>
+    <ComGroup title="是否显示划线价">
+      <el-radio v-model="configData.markingPrice" :label="0"> 否 </el-radio>
+      <el-radio v-model="configData.markingPrice" :label="1"> 是 </el-radio>
     </ComGroup>
-    <ComGroup
-      title="是否显示购买图标"
-    >
-      <el-radio v-model="configData.purchase" :label="0">
-        否
-      </el-radio>
-      <el-radio v-model="configData.purchase" :label="1">
-        是
-      </el-radio>
+    <ComGroup title="是否显示购买图标">
+      <el-radio v-model="configData.purchase" :label="0"> 否 </el-radio>
+      <el-radio v-model="configData.purchase" :label="1"> 是 </el-radio>
     </ComGroup>
     <!-- <ComGroup title="显示样式" :content-block="true">
       <el-radio v-model="configData.styleType" label="styleType1"
@@ -196,56 +189,56 @@
   </div>
 </template>
 <script>
-import draggable from 'vuedraggable' // 拖拽元素
-import ComGroup from '@/components/BasicUi/ComGroup'
-import DialogProduct from '@/components/BasicDialog/DialogProduct'
-import UpLoadBox from '@/components/BasicUi/UpLoadBox'
-import ComRadioGroup from '@/components/BasicUi/ComRadioGroup'
+import draggable from "vuedraggable" // 拖拽元素
+import ComGroup from "@/components/BasicUi/ComGroup"
+import DialogProduct from "@/components/BasicDialog/DialogProduct"
+import UpLoadBox from "@/components/BasicUi/UpLoadBox"
+import ComRadioGroup from "@/components/BasicUi/ComRadioGroup"
 export default {
-  name: 'Product',
+  name: "Product",
   components: { draggable, ComGroup, DialogProduct, UpLoadBox, ComRadioGroup },
-  props: ['parmes'],
+  props: ["parmes"],
   data() {
     return {
       configData: JSON.parse(JSON.stringify(this.parmes)),
-      initTxtColor: '#F5514B',
+      initTxtColor: "#F5514B",
       dialogProductVisible: false,
       styleList: [
         {
-          name: '一行一个',
-          id: 'oneLineOne',
-          icon: 'cuberow'
+          name: "一行一个",
+          id: "oneLineOne",
+          icon: "cuberow",
         },
         {
-          name: '一行两个',
-          id: 'oneLineTwo',
-          icon: 'cuberow'
+          name: "一行两个",
+          id: "oneLineTwo",
+          icon: "cuberow",
         },
         {
-          name: '详细列表',
-          id: 'listDetail',
-          icon: 'cubeto',
-          equalScale: true
-        }
-      ]
+          name: "详细列表",
+          id: "listDetail",
+          icon: "cubeto",
+          equalScale: true,
+        },
+      ],
     }
   },
   // mounted() {},
   computed: {
     selectStyle() {
       return this.styleList.find(
-        (item) => item.id === this.configData.listStyle
+        (item) => item.id === this.configData.listStyle,
       )
-    }
+    },
   },
   watch: {
     configData: {
-      handler: function(newVal, oldVal) {
+      handler: function (newVal, oldVal) {
         // 更新组件配置数据
-        this.$emit('editComponent', newVal)
+        this.$emit("editComponent", newVal)
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     selectProduct(list) {
@@ -253,8 +246,8 @@ export default {
     },
     deleteProduct(index) {
       this.configData.productList.splice(index, 1)
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="less" scoped>

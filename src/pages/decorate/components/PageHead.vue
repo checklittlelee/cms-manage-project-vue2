@@ -97,6 +97,7 @@ export default {
       // 使用扩展运算符合并
       let pageData = { ...this.pageData, params }
       pageData.componentList.forEach((item, index) => {
+        // 组件的显示顺序
         item.sort = index
       })
       return saveCmsPage(pageData).then((resp) => {

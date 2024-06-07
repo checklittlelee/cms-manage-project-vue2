@@ -130,4 +130,11 @@ export default {
     }
   }
 }
+
+.el-collapse {
+  border-bottom: none;
+  /deep/.el-collapse-item__wrap {
+    border-bottom: none;
+  }
+}
 </style>

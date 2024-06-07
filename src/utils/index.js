@@ -1,5 +1,5 @@
-export const isEmpty = val => {
-  return val === '' || val === undefined || val === null
+export const isEmpty = (val) => {
+  return val === "" || val === undefined || val === null
 }
 
 /**
@@ -8,10 +8,14 @@ export const isEmpty = val => {
  */
 export function dynamicComponents() {
   let components = {}
-  const dycomponent = require.context('@/components/ComponentsConfig', true, /\.vue$/)
-  dycomponent.keys().map(item => {
+  const dycomponent = require.context(
+    "@/components/ComponentsConfig",
+    true,
+    /\.vue$/,
+  )
+  dycomponent.keys().map((item) => {
     // 动态注册组件对应的配置文件
-    const name = item.split('/')[1]
+    const name = item.split("/")[1]
     components[name] = dycomponent(item).default
   })
   return components
@@ -35,7 +39,7 @@ export class Messager {
         this.actions[type](event.data.value)
       }
     }
-    window.addEventListener('message', this.messageListener)
+    window.addEventListener("message", this.messageListener)
   }
   /**
    * @name: 设置指定名称的消息监听
@@ -52,15 +56,19 @@ export class Messager {
    * @param {Object} value  发送的数据
    */
   emit(type, value) {
-    var win = document.getElementById('previewIframe').contentWindow
-    win.postMessage({
-      type, value
-    }, this.targetOrigin)
+    var win = document.getElementById("previewIframe").contentWindow
+    win.postMessage(
+      {
+        type,
+        value,
+      },
+      this.targetOrigin,
+    )
     return this
   }
   // 移除消息的监听
   destroy() {
-    window.removeEventListener('message', this.messageListener)
+    window.removeEventListener("message", this.messageListener)
   }
 }
 

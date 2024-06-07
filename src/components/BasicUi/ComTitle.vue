@@ -1,3 +1,4 @@
+<!-- 函数式组件，内部没有逻辑，仅依赖于父组件传入的数据进行渲染 -->
 <template functional>
   <div class="component-title">
     {{ props.title }}

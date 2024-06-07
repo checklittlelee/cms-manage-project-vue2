@@ -1,16 +1,17 @@
-import Vue from 'vue'
-import App from '@/App.vue'
-import store from '@/store'
-import router from '@/router'
-import VueRouter from 'vue-router'
-import '@/styles/app.less' // 后台装修搭建系统公共CSS
-import VueQuillEditor from 'vue-quill-editor'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+import Vue from "vue"
+import App from "@/App.vue"
+import store from "@/store"
+import router from "@/router"
+import VueRouter from "vue-router"
+import "@/styles/app.less" // 后台装修搭建系统公共CSS
+// 富文本相关
+import VueQuillEditor from "vue-quill-editor"
+import "quill/dist/quill.core.css"
+import "quill/dist/quill.snow.css"
+import "quill/dist/quill.bubble.css"
 
-import PizzaUI from '@bigbighu/mobili-pizza'
-import CoffeeUI from '@bigbighu/mobili-coffee'
+import PizzaUI from "@bigbighu/mobili-pizza"
+import CoffeeUI from "@bigbighu/mobili-coffee"
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
@@ -18,8 +19,8 @@ Vue.use(VueQuillEditor)
 Vue.use(PizzaUI)
 Vue.use(CoffeeUI)
 new Vue({
-  el: '#app',
+  el: "#app",
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 })

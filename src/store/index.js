@@ -141,8 +141,8 @@ const store = new Vuex.Store({
       state.previewHeight = height
       state.componentsTopList = list
     },
-    // 向H5页面发送更改后的数据
-    // disabledRestHeight: 是否将h5组件高度更新到cms
+    // 封装的 4个 跨源通信函数
+    // 向H5页面发送更改后的数据。disabledRestHeight: 是否将h5组件高度更新到cms
     VIEW_UPDATE(state, disabledRestHeight = false) {
       messager.emit("pageChange", {
         disabledRestHeight,
@@ -197,7 +197,7 @@ const store = new Vuex.Store({
         let list = data.componentsTopList || [] // 页面中组件高度的集合
         commit("UPDATE_PAGE_HEIGHT", { height, list })
       })
-      // 监听H5预览页面数据变化
+      // 监听H5预览页面数据变化(拖拽调整组件数据时，crs给cms发送数据变化)
       messager.on("pageChange", (data) => {
         console.log("从H5更新组件数据为", data)
         commit("UPDATE_COMPONENT", { data })

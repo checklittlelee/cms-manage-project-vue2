@@ -1,18 +1,20 @@
 <template>
   <!-- 上传图片盒子 -->
   <div class="up-pic-box">
+    <!-- uploading存在，表示正在上传，一闪而过的效果 -->
     <template v-if="uploading">
-      <div v-loading="uploading" element-loading-text="上传中"
-           element-loading-spinner="el-icon-loading"
-           element-loading-background="rgba(0, 0, 0, 0.3)"
+      <div
+        v-loading="uploading"
+        element-loading-text="上传中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
       />
     </template>
+    <!-- 显示已经上传成功的图片、未上传时的效果 -->
     <template v-else>
       <template v-if="url">
-        <img :src="url">
-        <p class="pic-tips" @click="editImg">
-          更换图片
-        </p>
+        <img :src="url" />
+        <p class="pic-tips" @click="editImg">更换图片</p>
       </template>
       <template v-else>
         <div class="not-pic" @click="editImg">
@@ -23,16 +25,17 @@
         </div>
       </template>
     </template>
-    <el-upload v-show="false"
-               :headers="headers"
-               ref="upload"
-               :action="actionUrl"
-               :multiple="false"
-               list-type="picture"
-               :show-file-list="false"
-               :on-success="doSuccess"
-               :on-error="doError"
-               :before-upload="beforeAvatarUpload"
+    <el-upload
+      v-show="false"
+      ref="upload"
+      :headers="headers"
+      :action="actionUrl"
+      :multiple="false"
+      list-type="picture"
+      :show-file-list="false"
+      :on-success="doSuccess"
+      :on-error="doError"
+      :before-upload="beforeAvatarUpload"
     >
       <el-button size="small" type="primary" :loading="uploading">
         +&nbsp;上传图片
@@ -45,24 +48,26 @@
 </template>
 
 <script>
-import { upLoadUrl } from '@/api/index'
+import { upLoadUrl } from "@/api/index" // 上传图片接口
+
 export default {
-  name: 'UploadBox',
+  name: "UploadBox",
   props: {
     // 图片地址
     imgUrl: {
       type: String,
-      default: ''
+      default: "",
     },
     // 添加图片文字
     addPlaceHolder: {
       type: String,
-      default: '添加图片'
+      default: "添加图片",
     },
-    uploadFile: { // 是否用来上传本地文件
+    uploadFile: {
+      // 是否用来上传本地文件
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -70,8 +75,8 @@ export default {
       actionUrl: upLoadUrl, // 上传图片接口地址
       uploading: false, // 是否正在上传图片中
       headers: {
-        'X-token': localStorage.getItem('token')
-      }
+        "X-token": localStorage.getItem("token"),
+      },
     }
   },
   watch: {
@@ -79,28 +84,29 @@ export default {
       handler() {
         this.url = this.imgUrl
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     editImg() {
-      console.log(this.uploadFile, 111)
       if (this.uploadFile) {
-        this.$refs.upload.$el.querySelector('button').click()
+        this.$refs.upload.$el.querySelector("button").click()
       } else {
-        this.$emit('editImg')
+        this.$emit("editImg")
       }
     },
     // 上传图片前的验证方法
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
+      // 文件类型判断
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png"
+      // 文件大小判断
       const isLt500 = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.$message.error('上传图片只能是 JPG/PNG 格式!')
+        this.$message.error("上传图片只能是 JPG/PNG 格式!")
       }
       if (!isLt500) {
-        this.$message.error('上传图片大小不能超过 500kb!')
+        this.$message.error("上传图片大小不能超过 500KB!")
       }
       if (isJPG && isLt500) {
         this.uploading = true
@@ -112,15 +118,15 @@ export default {
     // 上传图片成功的方法
     doSuccess(response, file, fileList) {
       this.uploading = false
-      this.$emit('update:imgUrl', response.data)
+      this.$emit("update:imgUrl", response.data)
       // this.$emit('onSuccess', response.data)
     },
     // 上传图片失败的方法
     doError() {
-      this.$message.error('上传失败，请稍后重试')
+      this.$message.error("上传失败，请稍后重试")
       this.uploading = false
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -165,11 +171,11 @@ export default {
       margin-top: 4px;
     }
   }
-  .el-loading-parent--relative{
+  .el-loading-parent--relative {
     width: 100%;
     height: 100%;
     display: inline-block;
-    .el-loading-text{
+    .el-loading-text {
       font-size: 12px !important;
     }
   }

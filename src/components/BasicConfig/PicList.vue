@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 拖拽容器 -->
     <draggable
       v-model="picData"
       :options="{
@@ -25,9 +26,7 @@
           />
           <div class="info">
             <dl v-if="showName" class="com-form-group">
-              <dt class="form-label">
-                标题
-              </dt>
+              <dt class="form-label">标题</dt>
               <dd class="form-container">
                 <el-input
                   v-model.lazy="item.text"
@@ -37,9 +36,7 @@
               </dd>
             </dl>
             <dl class="com-form-group">
-              <dt class="form-label">
-                链接
-              </dt>
+              <dt class="form-label">链接</dt>
               <dd class="form-container">
                 <!-- 配置链接地址组件 -->
                 <ConfigLink :link-obj.sync="item.link" />
@@ -55,86 +52,89 @@
         />
       </div>
     </draggable>
-    <!-- 添加图片 -->
+
+    <!-- 添加图片按钮 -->
     <ButtonAdd v-if="showAdd" :add-text="addPlaceHolder" @click="addItem" />
   </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable' // 拖拽元素
-import UpLoadBox from '@/components/BasicUi/UpLoadBox'
-import ButtonAdd from '@/components/BasicUi/ButtonAdd'
-import ConfigLink from '@/components/BasicConfig/ConfigLink'
+import draggable from "vuedraggable" // 拖拽元素
+import UpLoadBox from "@/components/BasicUi/UpLoadBox"
+import ConfigLink from "@/components/BasicConfig/ConfigLink" // 添加跳转链接组件
+import ButtonAdd from "@/components/BasicUi/ButtonAdd" // 添加内容按钮组件
 
 export default {
-  name: 'PicList',
+  name: "PicList",
   components: {
     draggable,
     UpLoadBox,
     ButtonAdd,
-    ConfigLink
+    ConfigLink,
   },
   props: {
     // 图片列表数组
     imageList: {
-      type: Array, default: null
+      type: Array,
+      default: null,
     },
     // 图片标题文本输入框缺省提示文字
     inputPlaceHolder: {
-      type: String, default: ''
+      type: String,
+      default: "",
     },
     // 添加图片文字
     addPlaceHolder: {
       type: String,
-      default: '添加广告图'
+      default: "添加广告图",
     },
     // 是否显示图片选项
     showPic: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 是否显示标题选项
     showName: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 是否显示添加按钮
     showAdd: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 是否显示删除按钮
     showDelete: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 列表是否不可拖拽排序
     unGraggable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 最多添加的数据条目数
     limitSize: {
       type: Number,
-      default: 10
-    }
+      default: 10,
+    },
   },
   data() {
     return {
       // 当前图片数组数据
       picData: JSON.parse(JSON.stringify(this.imageList)),
-      currentItem: '' // 当前操作项-更改图片地址  修改图片地址时该项为空则是新增图片列表项
+      currentItem: "", // 当前操作项-更改图片地址  修改图片地址时该项为空则是新增图片列表项
     }
   },
   watch: {
     // 监听当前图片列表数据项修改
     picData: {
       handler: function (newVal, oldVal) {
-        console.log('图片列表配置修改', newVal)
-        this.$emit('update:imageList', newVal)
+        console.log("图片列表配置修改", newVal)
+        this.$emit("update:imageList", newVal)
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     // 新增项
@@ -147,13 +147,13 @@ export default {
       // 带图片
       if (this.showPic) {
         this.showDialogImage()
-        this.currentItem = ''
+        this.currentItem = ""
       } else {
         // 不带图片，新增项
         let item = {
           link: null, // 链接地址对象
-          imageUrl: '', // 图片地址
-          text: '' // 标题
+          imageUrl: "", // 图片地址
+          text: "", // 标题
         }
         this.picData.push(item)
       }
@@ -169,8 +169,8 @@ export default {
     },
     // 图片上传
     showDialogImage() {
-      this.$store.commit('SET_UPIMAGE_VISIBLE', true)
-      this.$store.commit('SET_UPIMAGE_FUC', this.upLoadImgSuccess)
+      this.$store.commit("SET_UPIMAGE_VISIBLE", true)
+      this.$store.commit("SET_UPIMAGE_FUC", this.upLoadImgSuccess)
     },
     // 图片上传成功
     upLoadImgSuccess(imgUrl) {
@@ -182,12 +182,12 @@ export default {
         let item = {
           link: null, // 链接地址对象
           imageUrl: imgUrl, // 图片地址
-          text: '' // 标题
+          text: "", // 标题
         }
         this.picData.push(item)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -212,8 +212,8 @@ export default {
       visibility: visible;
     }
   }
-  /deep/.config-link .cllt-name{
-    max-width:110px
+  /deep/.config-link .cllt-name {
+    max-width: 110px;
   }
 }
 .up-pic-item-wrapper {

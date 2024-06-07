@@ -1,9 +1,16 @@
 <template>
   <!-- 组件编辑模块 -->
-  <div class="com-group" :class="{'com-group-bg-gray': bgGray}">
-    <dl class="com-group-container" :class="{'com-group-container-block': contentBlock}">
+  <div class="com-group" :class="{ 'com-group-bg-gray': bgGray }">
+    <dl
+      class="com-group-container"
+      :class="{ 'com-group-container-block': contentBlock }"
+    >
       <dt v-if="title || selectValue" class="com-group-header">
-        <h2 class="com-name" :class="{'com-name-black': nameBlack}" :style="{width: labelWidth}">
+        <h2
+          class="com-name"
+          :class="{ 'com-name-black': nameBlack }"
+          :style="{ width: labelWidth }"
+        >
           {{ title }}
         </h2>
         <label v-if="selectValue" class="com-value">{{ selectValue }}</label>
@@ -20,36 +27,44 @@
 
 <script>
 export default {
-  name: 'ComGroup',
+  name: "ComGroup",
   props: {
+    // 模块标题
     title: {
-      type: String, default: ''
-    }, // 模块标题
+      type: String,
+      default: "",
+    },
+    // 模块选择的值
     selectValue: {
-      type: String, default: ''
-    }, // 模块选择的值
+      type: String,
+      default: "",
+    },
+    // 提示文本
     tips: {
-      type: String, default: ''
-    }, // 提示文本
+      type: String,
+      default: "",
+    },
     // 内容模块是否换行展示
     contentBlock: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 标题颜色是否加深
     nameBlack: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 背景颜色是否为深色
     bgGray: {
       type: Boolean,
-      default: false
+      default: false,
     },
+    // 例： 100px
     labelWidth: {
-      type: String, default: ''
-    } // 例： 100px
-  }
+      type: String,
+      default: "",
+    },
+  },
 }
 </script>
 

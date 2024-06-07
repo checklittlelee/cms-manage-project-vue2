@@ -37,6 +37,7 @@ module.exports = {
     "comma-dangle": "off",
     quotes: ["off"],
     "vue/html-self-closing": ["off"],
+    "vue/html-indent": "off",
   },
   globals: {
     Tiger: "readonly",

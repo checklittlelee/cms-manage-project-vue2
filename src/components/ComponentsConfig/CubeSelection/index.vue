@@ -1,6 +1,11 @@
+<!-- 魔方 -->
 <template>
   <div>
-    <ComGroup title="魔方布局" tips="选定布局区域，在下方添加图片，建议添加比例一致的图片" :name-black="true" />
+    <ComGroup
+      title="魔方布局"
+      tips="选定布局区域，在下方添加图片，建议添加比例一致的图片"
+      :name-black="true"
+    />
 
     <!-- 魔方展示区域 -->
     <div class="com-group-magic">
@@ -9,10 +14,13 @@
           v-for="(item, index) in configData.imageList"
           :key="index"
           class="magic-item"
-          :class="['magic-'+(index+1), {'nodata': !item.imageUrl, 'active': activeIndex === index}]"
+          :class="[
+            'magic-' + (index + 1),
+            { nodata: !item.imageUrl, active: activeIndex === index },
+          ]"
           @click="activeIndex = index"
         >
-          <img v-if="item.imageUrl" :src="item.imageUrl">
+          <img v-if="item.imageUrl" :src="item.imageUrl" />
           <div v-else class="deafult-desc">
             {{ selectStyle.list[index] }}
             <!-- <div v-if="selectStyle.equalScale">或同等比例</div> -->
@@ -23,13 +31,26 @@
 
     <!-- 修改图片 -->
     <ComGroup :bg-gray="true" :content-block="true">
-      <PicList :key="activeIndex" :image-list.sync="selectPic" :show-name="false"
-               :show-add="false" :show-delete="false" :un-graggable="true"
+      <PicList
+        :key="activeIndex"
+        :image-list.sync="selectPic"
+        :show-name="false"
+        :show-add="false"
+        :show-delete="false"
+        :un-graggable="true"
       />
     </ComGroup>
 
-    <ComGroup title="选择模板" :content-block="true" :select-value="selectStyle.name">
-      <ComRadioGroup v-model="configData.template" :radio-list="styleList" :content-block="true" />
+    <ComGroup
+      title="选择模板"
+      :content-block="true"
+      :select-value="selectStyle.name"
+    >
+      <ComRadioGroup
+        v-model="configData.template"
+        :radio-list="styleList"
+        :content-block="true"
+      />
     </ComGroup>
 
     <ComGroup title="页面边距">
@@ -63,15 +84,15 @@
 </template>
 
 <script>
-import ComGroup from '@/components/BasicUi/ComGroup'
-import ComRadioGroup from '@/components/BasicUi/ComRadioGroup'
-import PicList from '@/components/BasicConfig/PicList'
-import { debounce } from '@/utils'
+import ComGroup from "@/components/BasicUi/ComGroup"
+import ComRadioGroup from "@/components/BasicUi/ComRadioGroup"
+import PicList from "@/components/BasicConfig/PicList"
+import { debounce } from "@/utils"
 
 export default {
-  name: 'CubeSelection',
+  name: "CubeSelection",
   components: { ComGroup, ComRadioGroup, PicList },
-  props: ['parmes'],
+  props: ["parmes"],
   data() {
     return {
       // 当前组件数据
@@ -81,98 +102,98 @@ export default {
       // 可选模板
       styleList: [
         {
-          name: '一行二个',
-          id: 'oneLine2',
-          icon: 'cuberow',
-          list: ['宽度375像素', '宽度375像素']
+          name: "一行二个",
+          id: "oneLine2",
+          icon: "cuberow",
+          list: ["宽度375像素", "宽度375像素"],
         },
         {
-          name: '一行三个',
-          id: 'oneLine3',
-          icon: 'cuberow2',
-          list: ['宽度250像素', '宽度250像素', '宽度250像素']
+          name: "一行三个",
+          id: "oneLine3",
+          icon: "cuberow2",
+          list: ["宽度250像素", "宽度250像素", "宽度250像素"],
         },
         {
-          name: '一行四个',
-          id: 'oneLine4',
-          icon: 'cuberow1',
-          list: ['宽度188像素', '宽度188像素', '宽度188像素', '宽度188像素']
+          name: "一行四个",
+          id: "oneLine4",
+          icon: "cuberow1",
+          list: ["宽度188像素", "宽度188像素", "宽度188像素", "宽度188像素"],
         },
         {
-          name: '一左二右',
-          id: 'left1right2',
-          icon: 'cubeto',
+          name: "一左二右",
+          id: "left1right2",
+          icon: "cubeto",
           equalScale: true,
-          list: ['宽度375像素', '宽度375像素', '宽度375像素']
+          list: ["宽度375像素", "宽度375像素", "宽度375像素"],
         },
         {
-          name: '二左二右',
-          id: 'left2right2',
-          icon: 'cube',
+          name: "二左二右",
+          id: "left2right2",
+          icon: "cube",
           equalScale: true,
-          list: ['宽度375像素', '宽度375像素', '宽度375像素', '宽度375像素']
+          list: ["宽度375像素", "宽度375像素", "宽度375像素", "宽度375像素"],
         },
         {
-          name: '一左三右',
-          id: 'left1right3',
-          icon: 'cubeto1',
+          name: "一左三右",
+          id: "left1right3",
+          icon: "cubeto1",
           equalScale: true,
-          list: ['宽度375像素', '宽度375像素', '宽度188像素', '宽度188像素']
+          list: ["宽度375像素", "宽度375像素", "宽度188像素", "宽度188像素"],
         },
         {
-          name: '一上二下',
-          id: 'top1bottom2',
-          icon: 'cube-upto',
+          name: "一上二下",
+          id: "top1bottom2",
+          icon: "cube-upto",
           equalScale: true,
-          list: ['宽度750像素', '宽度375像素', '宽度375像素']
-        }
-      ]
+          list: ["宽度750像素", "宽度375像素", "宽度375像素"],
+        },
+      ],
     }
   },
   computed: {
     // 列表样式
     selectStyle() {
-      return this.styleList.find(item => item.id === this.configData.template)
+      return this.styleList.find((item) => item.id === this.configData.template)
     },
     selectPic: {
-      get: function() {
+      get: function () {
         return [this.configData.imageList[this.activeIndex]]
       },
-      set: function(newVal) {
+      set: function (newVal) {
         this.configData.imageList.splice(this.activeIndex, 1, newVal[0])
-        console.log('魔方图片被修改')
-      }
-    }
+        console.log("魔方图片被修改")
+      },
+    },
   },
   watch: {
     // 监听当前选择的模板，根据模板确定展示的数量
     selectStyle: {
-      handler: function(newVal, oldVal) {
+      handler: function (newVal, oldVal) {
         this.activeIndex = 0
         let diffLength = newVal.list.length - this.configData.imageList.length
         if (diffLength > 0) {
           for (let i = 0; i < diffLength; i++) {
             this.configData.imageList.push({
-              imageUrl: '',
-              link: null
+              imageUrl: "",
+              link: null,
             })
           }
         } else if (diffLength < 0) {
           this.configData.imageList.splice(-1, Math.abs(diffLength))
         }
       },
-      immediate: true
+      immediate: true,
     },
     // 监听当前组件配置及数据项修改
     configData: {
-      handler: debounce(function(newVal, oldVal) {
-        console.log('魔方配置修改', newVal)
+      handler: debounce(function (newVal, oldVal) {
+        console.log("魔方配置修改", newVal)
         // 更新组件配置数据
-        this.$emit('editComponent', newVal)
+        this.$emit("editComponent", newVal)
       }),
-      deep: true
-    }
-  }
+      deep: true,
+    },
+  },
 }
 </script>
 
@@ -242,7 +263,8 @@ export default {
       width: 50%;
       padding-bottom: 100%;
     }
-    .magic-2, .magic-3 {
+    .magic-2,
+    .magic-3 {
       position: absolute;
       left: 50%;
       width: 50%;
@@ -263,7 +285,8 @@ export default {
       margin: -1px;
       width: 50%;
       padding-bottom: 50%;
-      &.magic-3, &.magic-4 {
+      &.magic-3,
+      &.magic-4 {
         margin-top: -1px;
       }
     }
@@ -281,7 +304,8 @@ export default {
       width: 50%;
       padding-bottom: 50%;
     }
-    .magic-3, .magic-4 {
+    .magic-3,
+    .magic-4 {
       position: absolute;
       top: 50%;
       width: 25%;
@@ -305,7 +329,8 @@ export default {
       width: 100%;
       padding-bottom: 50%;
     }
-    .magic-2, .magic-3 {
+    .magic-2,
+    .magic-3 {
       margin: -1px 0 0 0;
       width: 50%;
       padding-bottom: 50%;
@@ -314,7 +339,10 @@ export default {
       margin-left: -1px;
     }
   }
-  &.left1right2, &.left2right2, &.left1right3, &.top1bottom2 {
+  &.left1right2,
+  &.left2right2,
+  &.left1right3,
+  &.top1bottom2 {
     .magic-item {
       img {
         position: absolute;
